@@ -92,7 +92,7 @@ To view the website locally, open `docs/index.html` in a browser. It also works 
 ## Website
 
 The site in `docs/` is plain HTML/CSS/JS with no build step. To publish it: repository **Settings → Pages → Deploy from a branch → `main` / `/docs`**.
-Then set `REPO_URL` at the top of `docs/assets/app.js` to your repository URL.
+
 All numbers on the page are read from `docs/data/site.js`, so re-running `src/run_all.py` updates the site automatically.
 
 Interactions: (1) a **threshold explorer** that recomputes the confusion matrix, precision/recall/F1 and PR-curve position from saved test predictions, with a validation-based cost-ratio threshold; (2) a linked **error inspector** listing the most confident false positives and negatives with their features.
