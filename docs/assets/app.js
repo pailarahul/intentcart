@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   // ---- Set this to your GitHub repository URL after pushing -----------------
-  const REPO_URL = "https://github.com/YOUR-USERNAME/intentcart";
+  const REPO_URL = "https://github.com/pailarahul/intentcart";
   // ---------------------------------------------------------------------------
 
   const S = window.SITE;
