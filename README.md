@@ -3,7 +3,7 @@
 **ES 335 Machine Learning: course project**
 Vishwak Mandaram (25110354) · Paila Rahul (25110222)
 
-**Live website:** https://YOUR-USERNAME.github.io/intentcart/  ← summarises the reasoning; this repository lets you check it.
+**Live website:** https://pailarahul.github.io/intentcart/  ← summarises the reasoning; this repository lets you check it.
 
 > **Question.** Given what a visitor did during one session on an online store, can we predict whether the session ended in a purchase?
 > Which models beat simple baselines, and where do they fail?
