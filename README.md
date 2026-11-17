@@ -37,7 +37,7 @@ docs/                                the GitHub Pages website (static HTML/CSS/J
 ## Setup and run
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/intentcart.git
+git clone https://github.com/pailarahul/intentcart.git
 cd intentcart
 python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
