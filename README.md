@@ -23,7 +23,7 @@
 
 ---
 
-## 2. Individual Understanding and Defense (ES 335 Rubric Deliverable)
+## 2. Individual Understanding and Defense 
 
 ### Vishwak Mandaram (Roll: 25110354) · 50% Project Contribution
 
