@@ -1,0 +1,117 @@
+setting,model,params,val_pr_auc
+A,majority,{},0.15467820443482963
+A,stump,{},0.4398863995922856
+A,logreg,"{""C"": 0.01, ""class_weight"": null}",0.6588019918301973
+A,logreg,"{""C"": 0.01, ""class_weight"": ""balanced""}",0.6437849203814556
+A,logreg,"{""C"": 0.1, ""class_weight"": null}",0.6662012150027883
+A,logreg,"{""C"": 0.1, ""class_weight"": ""balanced""}",0.6425276695471772
+A,logreg,"{""C"": 1.0, ""class_weight"": null}",0.6641706655841053
+A,logreg,"{""C"": 1.0, ""class_weight"": ""balanced""}",0.6410547275151464
+A,logreg,"{""C"": 10.0, ""class_weight"": null}",0.6632825497928324
+A,logreg,"{""C"": 10.0, ""class_weight"": ""balanced""}",0.6415664819697745
+A,tree,"{""max_depth"": 3, ""min_samples_leaf"": 5, ""class_weight"": null}",0.6238528437739932
+A,tree,"{""max_depth"": 3, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.6051755889008643
+A,tree,"{""max_depth"": 3, ""min_samples_leaf"": 20, ""class_weight"": null}",0.6238528437739932
+A,tree,"{""max_depth"": 3, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.6051755889008643
+A,tree,"{""max_depth"": 3, ""min_samples_leaf"": 50, ""class_weight"": null}",0.6238528437739932
+A,tree,"{""max_depth"": 3, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.6051755889008643
+A,tree,"{""max_depth"": 5, ""min_samples_leaf"": 5, ""class_weight"": null}",0.6521928472471183
+A,tree,"{""max_depth"": 5, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.6414093485794643
+A,tree,"{""max_depth"": 5, ""min_samples_leaf"": 20, ""class_weight"": null}",0.6449066897766825
+A,tree,"{""max_depth"": 5, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.6421673850481415
+A,tree,"{""max_depth"": 5, ""min_samples_leaf"": 50, ""class_weight"": null}",0.664677810516649
+A,tree,"{""max_depth"": 5, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.649216059692418
+A,tree,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""class_weight"": null}",0.5922182469858847
+A,tree,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.5935994940282499
+A,tree,"{""max_depth"": 8, ""min_samples_leaf"": 20, ""class_weight"": null}",0.6312507235965553
+A,tree,"{""max_depth"": 8, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.6351108889717888
+A,tree,"{""max_depth"": 8, ""min_samples_leaf"": 50, ""class_weight"": null}",0.6679305097133099
+A,tree,"{""max_depth"": 8, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.668428837409618
+A,tree,"{""max_depth"": null, ""min_samples_leaf"": 5, ""class_weight"": null}",0.49600325731996947
+A,tree,"{""max_depth"": null, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.48521058728499566
+A,tree,"{""max_depth"": null, ""min_samples_leaf"": 20, ""class_weight"": null}",0.6113067381503953
+A,tree,"{""max_depth"": null, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.6237175732485751
+A,tree,"{""max_depth"": null, ""min_samples_leaf"": 50, ""class_weight"": null}",0.6654212673987799
+A,tree,"{""max_depth"": null, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.6596862375383324
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": null}",0.7095424490990154
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.6529563003415263
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": null}",0.7114588403721
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.704817249847916
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": null}",0.705403279471252
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.6593265062545464
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": null}",0.717737326394557
+A,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.7109593325390555
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": null}",0.7054693839898458
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.70049371685179
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": null}",0.6999464728733362
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.6948188462592779
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": null}",0.7179229736085265
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.6983986879528543
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": null}",0.7127036525519751
+A,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.711489198237659
+A,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 15, ""l2_regularization"": 0.0}",0.7226801147724208
+A,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 15, ""l2_regularization"": 1.0}",0.7267724579780034
+A,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 31, ""l2_regularization"": 0.0}",0.720554579705254
+A,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 31, ""l2_regularization"": 1.0}",0.721139711060098
+A,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 15, ""l2_regularization"": 0.0}",0.720968224019341
+A,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 15, ""l2_regularization"": 1.0}",0.7207883257002378
+A,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 31, ""l2_regularization"": 0.0}",0.7224825286493642
+A,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 31, ""l2_regularization"": 1.0}",0.7240303587342212
+B,majority,{},0.15467820443482963
+B,stump,{},0.19716878263691812
+B,logreg,"{""C"": 0.01, ""class_weight"": null}",0.3258304888787839
+B,logreg,"{""C"": 0.01, ""class_weight"": ""balanced""}",0.32463928517776175
+B,logreg,"{""C"": 0.1, ""class_weight"": null}",0.33103922096085653
+B,logreg,"{""C"": 0.1, ""class_weight"": ""balanced""}",0.3267904684267672
+B,logreg,"{""C"": 1.0, ""class_weight"": null}",0.3304570390257522
+B,logreg,"{""C"": 1.0, ""class_weight"": ""balanced""}",0.32664703900476927
+B,logreg,"{""C"": 10.0, ""class_weight"": null}",0.3309426052329864
+B,logreg,"{""C"": 10.0, ""class_weight"": ""balanced""}",0.3263485023064615
+B,tree,"{""max_depth"": 3, ""min_samples_leaf"": 5, ""class_weight"": null}",0.26551603335140594
+B,tree,"{""max_depth"": 3, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.2512332456679816
+B,tree,"{""max_depth"": 3, ""min_samples_leaf"": 20, ""class_weight"": null}",0.26551603335140594
+B,tree,"{""max_depth"": 3, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.2512332456679816
+B,tree,"{""max_depth"": 3, ""min_samples_leaf"": 50, ""class_weight"": null}",0.26551603335140594
+B,tree,"{""max_depth"": 3, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.25333497276414074
+B,tree,"{""max_depth"": 5, ""min_samples_leaf"": 5, ""class_weight"": null}",0.2767018635759748
+B,tree,"{""max_depth"": 5, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.25972201941630435
+B,tree,"{""max_depth"": 5, ""min_samples_leaf"": 20, ""class_weight"": null}",0.27787622077582336
+B,tree,"{""max_depth"": 5, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.2653882113444773
+B,tree,"{""max_depth"": 5, ""min_samples_leaf"": 50, ""class_weight"": null}",0.281677667480476
+B,tree,"{""max_depth"": 5, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.27342923996127944
+B,tree,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""class_weight"": null}",0.2628556190324204
+B,tree,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.2640449322696686
+B,tree,"{""max_depth"": 8, ""min_samples_leaf"": 20, ""class_weight"": null}",0.28113140309609697
+B,tree,"{""max_depth"": 8, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.2699078664381955
+B,tree,"{""max_depth"": 8, ""min_samples_leaf"": 50, ""class_weight"": null}",0.2909683932275744
+B,tree,"{""max_depth"": 8, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.2911092097299652
+B,tree,"{""max_depth"": null, ""min_samples_leaf"": 5, ""class_weight"": null}",0.2363518947478323
+B,tree,"{""max_depth"": null, ""min_samples_leaf"": 5, ""class_weight"": ""balanced""}",0.24459276986690517
+B,tree,"{""max_depth"": null, ""min_samples_leaf"": 20, ""class_weight"": null}",0.25622219771971066
+B,tree,"{""max_depth"": null, ""min_samples_leaf"": 20, ""class_weight"": ""balanced""}",0.2787346896736414
+B,tree,"{""max_depth"": null, ""min_samples_leaf"": 50, ""class_weight"": null}",0.2907608265000894
+B,tree,"{""max_depth"": null, ""min_samples_leaf"": 50, ""class_weight"": ""balanced""}",0.2900343623530457
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": null}",0.3453832277257436
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.33309751341709
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": null}",0.3283813271329564
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.32189478689820494
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": null}",0.3455961752925819
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.3380489304431897
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": null}",0.33925180481291617
+B,forest,"{""max_depth"": 8, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.3385172094853867
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": null}",0.32371115062301337
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.337043150637253
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": null}",0.3179775527486797
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 1, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.3177083409847716
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": null}",0.3521331974676783
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": ""sqrt"", ""class_weight"": ""balanced_subsample""}",0.34857503604766943
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": null}",0.3364982185182732
+B,forest,"{""max_depth"": null, ""min_samples_leaf"": 5, ""max_features"": 0.5, ""class_weight"": ""balanced_subsample""}",0.3303818079379609
+B,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 15, ""l2_regularization"": 0.0}",0.35083269781995485
+B,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 15, ""l2_regularization"": 1.0}",0.35180825081913714
+B,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 31, ""l2_regularization"": 0.0}",0.3405426502017711
+B,gboost,"{""learning_rate"": 0.03, ""max_leaf_nodes"": 31, ""l2_regularization"": 1.0}",0.34587710504143826
+B,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 15, ""l2_regularization"": 0.0}",0.35905662304019725
+B,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 15, ""l2_regularization"": 1.0}",0.35620727407675207
+B,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 31, ""l2_regularization"": 0.0}",0.3450679280141257
+B,gboost,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 31, ""l2_regularization"": 1.0}",0.33078520427377067

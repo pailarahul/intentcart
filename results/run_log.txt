@@ -1,0 +1,19 @@
+EDA done {'n_rows': 12330, 'n_features': 17, 'n_positive': 1908, 'positive_rate': 0.15474452554744525, 'missing_values': 0, 'duplicate_rows_extra_copies': 125, 'rows_in_duplicate_groups': 201, 'duplicate_rows_all_nonpurchase': True, 'duplicate_rows_all_single_page_bounce': True, 'negative_values': {}, 'months_present': ['Feb', 'Mar', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 'months_missing': ['Jan', 'Apr']}
+Split {'train': {'n': 8631, 'positives': 1336, 'rate': 0.1548}, 'val': {'n': 1849, 'positives': 286, 'rate': 0.1547}, 'test': {'n': 1850, 'positives': 286, 'rate': 0.1546}}
+  [A] majority  val PR-AUC=0.155 t=0.500 params={}
+  [A] stump     val PR-AUC=0.440 t=0.580 params={}
+  [A] logreg    val PR-AUC=0.666 t=0.352 params={'C': 0.1, 'class_weight': None}
+  [A] tree      val PR-AUC=0.668 t=0.651 params={'max_depth': 8, 'min_samples_leaf': 50, 'class_weight': 'balanced'}
+  [A] forest    val PR-AUC=0.718 t=0.367 params={'max_depth': None, 'min_samples_leaf': 5, 'max_features': 'sqrt', 'class_weight': None}
+  [A] gboost    val PR-AUC=0.727 t=0.361 params={'learning_rate': 0.03, 'max_leaf_nodes': 15, 'l2_regularization': 1.0}
+  [B] majority  val PR-AUC=0.155 t=0.500 params={}
+  [B] stump     val PR-AUC=0.197 t=0.234 params={}
+  [B] logreg    val PR-AUC=0.331 t=0.210 params={'C': 0.1, 'class_weight': None}
+  [B] tree      val PR-AUC=0.291 t=0.537 params={'max_depth': 8, 'min_samples_leaf': 50, 'class_weight': 'balanced'}
+  [B] forest    val PR-AUC=0.352 t=0.153 params={'max_depth': None, 'min_samples_leaf': 5, 'max_features': 'sqrt', 'class_weight': None}
+  [B] gboost    val PR-AUC=0.359 t=0.194 params={'learning_rate': 0.1, 'max_leaf_nodes': 15, 'l2_regularization': 0.0}
+Selected on validation: {'A': 'gboost', 'B': 'gboost'}
+CV done
+Temporal done
+Extras done
+Done in 175s

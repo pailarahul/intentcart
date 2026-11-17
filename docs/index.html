@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IntentCart · Online Purchase Intention · ES 335</title>
+<meta name="description" content="ES 335 Machine Learning project: can browsing-session information predict whether an online shopping session ends in a purchase?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="layout">
+<nav class="toc" aria-label="Sections">
+  <div class="brand">IntentCart</div>
+  <ol>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#question">1 · Question</a></li>
+    <li><a href="#data">2 · Data</a></li>
+    <li><a href="#preprocessing">3 · Preprocessing</a></li>
+    <li><a href="#methods">4 · Baseline &amp; methods</a></li>
+    <li><a href="#evaluation">5 · Evaluation design</a></li>
+    <li><a href="#results">6 · Results</a></li>
+    <li><a href="#explorer">7 · Threshold explorer</a></li>
+    <li><a href="#errors">8 · Errors</a></li>
+    <li><a href="#robustness">9 · Robustness checks</a></li>
+    <li><a href="#limitations">10 · Limitations</a></li>
+    <li><a href="#conclusion">11 · Conclusion</a></li>
+    <li><a href="#reproduce">12 · Reproduce</a></li>
+    <li><a href="#about">13 · Team, AI use, citations</a></li>
+  </ol>
+  <div class="links">
+    <a class="repo-link" href="#">Source repository ↗</a>
+    <a href="https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset">Dataset (UCI) ↗</a>
+  </div>
+</nav>
+
+<main>
+<header class="hero" id="summary">
+  <div class="kicker">ES 335 · Machine Learning · Course project</div>
+  <div class="hero-art" id="hero-art" aria-hidden="true"></div>
+  <h1>IntentCart: Online Purchase Intention</h1>
+  <p class="sub"><b>Can browsing behaviour predict whether a shopping session ends in a purchase?</b> We compare simple baselines with logistic regression and tree-based models on 12,330 e-commerce sessions.
+    We also ask how much of the signal comes from one suspicious feature, <code>PageValues</code>.</p>
+  <div class="authors">Vishwak Mandaram (25110354) · Paila Rahul (25110222) ·
+    <a class="repo-link" href="#">Code &amp; full results on GitHub</a></div>
+
+  <div class="tiles">
+    <div class="tile"><div class="big" data-v="B_pr"></div>
+      <div class="lab">Test PR-AUC <b>without PageValues</b> (main setting), 95% CI <span data-v="B_ci"></span>.
+        Majority baseline: <span data-v="prev"></span>.</div></div>
+    <div class="tile"><div class="big" data-v="A_pr"></div>
+      <div class="lab">Test PR-AUC <b>with PageValues</b>. We treat it as an optimistic upper bound because the feature may encode the outcome.</div></div>
+    <div class="tile"><div class="big" data-v="B_rec_p"></div>
+      <div class="lab">of buyers caught in the main setting, at a threshold fixed on validation. Only <span data-v="B_prec_p"></span> of flagged sessions are buyers.</div></div>
+  </div>
+  <div class="callout key"><b>Answer in one paragraph.</b>
+    Yes, but only to a limited degree. Once we remove <code>PageValues</code>, a revenue-derived analytics score,
+    the best models reach a PR-AUC of <span data-v="B_pr"></span>, about <span data-v="B_lift"></span> the chance level of <span data-v="prev"></span>. They clearly beat a one-rule baseline. However, logistic regression, random forest and gradient boosting
+    are statistically hard to separate. With <code>PageValues</code> the score roughly doubles. That gain mostly reflects information about
+    the purchase itself, not browsing behaviour. Predictions are associations from one store and one year, not causes.</div>
+  <nav class="pipeline" aria-label="Project stages">
+    <a href="#question"><span class="ti ti-help-circle"></span><i>1</i>Question</a>
+    <a href="#data"><span class="ti ti-database"></span><i>2</i>Data</a>
+    <a href="#preprocessing"><span class="ti ti-adjustments"></span><i>3</i>Prep</a>
+    <a href="#methods"><span class="ti ti-hierarchy-3"></span><i>4</i>Models</a>
+    <a href="#evaluation"><span class="ti ti-scale"></span><i>5</i>Evaluation</a>
+    <a href="#results"><span class="ti ti-chart-bar"></span><i>6</i>Results</a>
+    <a href="#explorer"><span class="ti ti-hand-click"></span><i>7</i>Explore</a>
+    <a href="#errors"><span class="ti ti-bug"></span><i>8</i>Errors</a>
+    <a href="#limitations"><span class="ti ti-alert-triangle"></span><i>10</i>Limits</a>
+    <a href="#conclusion"><span class="ti ti-flag"></span><i>11</i>Conclusion</a>
+  </nav>
+</header>
+
+<!-- ======================================================== 1 -->
+<section id="question">
+  <h2><span class="num">1</span>Question and framing</h2>
+  <p class="lede">What exactly is predicted, for whom, and when.</p>
+  <table>
+    <tr><th style="width:200px">Question</th><td>Given what a visitor did during one session on an online store, can we predict whether the session ended in a purchase? Which kinds of model do this better than simple baselines, and where do they fail?</td></tr>
+    <tr><th>One row</th><td>One <b>browsing session</b>. The dataset was built so that each session belongs to a different user, so there are no repeated visitors to leak across splits.</td></tr>
+    <tr><th>Target</th><td><code>Revenue</code> = 1 if the session included a transaction, else 0. Positive rate: <span data-v="pos_rate"></span> (<span data-v="n_pos"></span> of <span data-v="n_rows"></span>).</td></tr>
+    <tr><th>When the prediction is made</th><td><b>At the end of a session.</b> Every feature is a whole-session aggregate (total pages, total time, average exit rate). A realistic use is deciding, once a visit ends, which non-buyers resemble buyers and are worth a reminder or offer. This is <i>not</i> a real-time, mid-session predictor. The dataset has no time-stamped clicks, so we cannot evaluate one.</td></tr>
+    <tr><th>Information available then</th><td>Page counts and durations by page type, bounce and exit rates, month, special-day proximity, weekend, visitor type, and anonymised OS, browser, region and traffic-source codes. <code>PageValues</code> is the problem column. Google Analytics computes it from the revenue of sessions that passed through the same pages, so it can carry information about the outcome. We therefore run two <b>feature settings</b>:
+      <div class="cards">
+        <div class="card"><h4>Setting A · All features</h4><p class="why">Optimistic upper bound. Kept to show how much a single possibly-leaky feature inflates the score.</p></div>
+        <div class="card"><h4>Setting B · Without PageValues <span class="tag blue">main claim</span></h4><p class="why">Only behavioural and context variables. Our conclusions rest on this setting.</p></div>
+      </div></td></tr>
+    <tr><th>Limits of the claim</th><td>Predictive association within one retailer's data for one year. We make no causal claims ("long product-page time causes buying"), and the results may not transfer to other stores or periods (see §9 and §10).</td></tr>
+  </table>
+</section>
+
+<!-- ======================================================== 2 -->
+<section id="data">
+  <h2><span class="num">2</span>Data</h2>
+  <p class="lede">UCI "Online Shoppers Purchasing Intention" dataset (Sakar et al., 2019). Licence CC BY 4.0; public, no personal data.</p>
+  <div class="tiles">
+    <div class="tile"><div class="big" data-v="n_rows"></div><div class="lab">sessions (rows) from one year</div></div>
+    <div class="tile"><div class="big">17</div><div class="lab">input variables: 10 numeric, 7 categorical/binary</div></div>
+    <div class="tile"><div class="big" data-v="pos_rate"></div><div class="lab">sessions end in a purchase, so the classes are imbalanced (≈ 1 : 5.5)</div></div>
+    <div class="tile"><div class="big">0</div><div class="lab">missing values</div></div>
+  </div>
+
+  <h3>Key variables</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Group</th><th>Variables</th><th>Notes</th></tr>
+    <tr><td>Pages &amp; time</td><td><code>Administrative</code>, <code>Informational</code>, <code>ProductRelated</code> (+ <code>_Duration</code> in seconds)</td><td>Counts and total time per page type. Very right-skewed: <code>ProductRelated_Duration</code> has skew <span data-v="skew_prd"></span> and a max of <span data-v="max_prd"></span> s.</td></tr>
+    <tr><td>Analytics rates</td><td><code>BounceRates</code>, <code>ExitRates</code></td><td>Google Analytics page-level rates averaged over the pages the session visited.</td></tr>
+    <tr><td>Page value</td><td><code>PageValues</code></td><td>Average "value" of pages visited, derived from revenue. It is zero in <span data-v="pv_zero"></span> of sessions. <b>Leakage risk</b> (below).</td></tr>
+    <tr><td>Calendar</td><td><code>Month</code>, <code>SpecialDay</code>, <code>Weekend</code></td><td>No January or April rows. May and November together hold half the data.</td></tr>
+    <tr><td>Visitor &amp; tech</td><td><code>VisitorType</code>, <code>OperatingSystems</code>, <code>Browser</code>, <code>Region</code>, <code>TrafficType</code></td><td>The last four are anonymised integer codes. Their numbers have no order, so we treat them as categories.</td></tr>
+  </table></div>
+
+  <div class="grid2">
+    <div>
+      <div class="chart-title">Purchase rate by month</div>
+      <div class="small">Bar = share of sessions with a purchase; hover for counts.</div>
+      <div class="chart" id="chart-month"></div>
+    </div>
+    <div>
+      <div class="chart-title">Purchase rate by PageValues</div>
+      <div class="small">One feature almost splits the classes.</div>
+      <div class="chart" id="chart-pv"></div>
+    </div>
+  </div>
+
+  <h3>Quality checks and what we found</h3>
+  <ul>
+    <li><b>Duplicates:</b> there are <span data-v="dup_extra"></span> extra copies (<span data-v="dup_rows"></span> rows in duplicate groups). <i>All</i> of them are one-page bounce sessions with zero duration and no purchase. With so few distinct values, different visitors who land on a page and leave produce identical rows. We therefore treat them as real traffic and <b>keep</b> them. §9 shows that removing them changes the test PR-AUC by only about 0.01.</li>
+    <li><b>PageValues leakage:</b> sessions with <code>PageValues</code> &gt; 0 buy <span data-v="pv_rate1"></span> of the time, against <span data-v="pv_rate0"></span> when it is 0. Google Analytics assigns a page value from the revenue of sessions that reached a transaction after viewing that page. So most buying sessions (81% here) have pages with value, partly <i>because</i> they bought. Its exact computation window is unknown to us, so we cannot rule leakage in or out. Hence the two settings.</li>
+    <li><b>Seasonality and coverage:</b> purchase rates range from <span data-v="feb_rate"></span> (Feb) to <span data-v="nov_rate"></span> (Nov). Two months are missing, so any month effect is specific to this calendar.</li>
+    <li><b>Visitor type:</b> new visitors buy more often (<span data-v="new_rate"></span>) than returning ones (<span data-v="ret_rate"></span>). Returning visitors are 86% of the data.</li>
+    <li><b>Skew and outliers:</b> durations reach many hours. We keep these values, since they are plausible idle tabs, and compress them with <code>log1p</code> for the linear model instead of deleting them.</li>
+  </ul>
+  <details><summary>Median of each numeric feature by class</summary><div class="tablewrap" id="tbl-median"></div></details>
+</section>
+
+<!-- ======================================================== 3 -->
+<section id="preprocessing">
+  <h2><span class="num">3</span>Preprocessing, and why</h2>
+  <p class="lede">Every learned step sits inside a scikit-learn <code>Pipeline</code> and is fitted on the <b>training split only</b>. The validation and test splits are only ever <i>transformed</i>.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Step</th><th>What</th><th>Why</th><th>Learned from</th></tr>
+    <tr><td>Types</td><td><code>Revenue</code>, <code>Weekend</code> → 0/1; OS, browser, region and traffic codes → categorical strings</td><td>The codes are labels. Treating "browser 13" as larger than "browser 2" would be meaningless.</td><td>Nothing (fixed rule)</td></tr>
+    <tr><td>Feature setting</td><td>Drop <code>PageValues</code> in setting B</td><td>Possible outcome leakage (§1)</td><td>Decided before modelling</td></tr>
+    <tr><td>Log transform <span class="tag">LogReg only</span></td><td><code>log1p</code> on the 6 count/duration columns (and PageValues in A)</td><td>Long tails would otherwise dominate a linear decision boundary</td><td>Nothing (fixed function)</td></tr>
+    <tr><td>Standardise <span class="tag">LogReg only</span></td><td>Mean 0, SD 1 for numeric columns</td><td>Puts all features on one scale so the L2 penalty treats them evenly</td><td>Train mean and SD</td></tr>
+    <tr><td>One-hot encode</td><td>Categorical columns; categories seen &lt; 20 times are merged into "infrequent"; categories unseen in training are ignored</td><td>Rare browser and traffic codes would otherwise give noisy single-row columns</td><td>Train vocabulary and frequencies</td></tr>
+    <tr><td>Trees: no scaling</td><td>Raw numerics passed through</td><td>Tree splits do not change under monotone transforms</td><td>–</td></tr>
+    <tr><td>Imbalance</td><td>No resampling. <code>class_weight</code> is a tuned option, and the decision threshold is tuned on validation</td><td>Keeps probabilities interpretable and avoids synthetic rows. The threshold handles the trade-off directly</td><td>Validation split</td></tr>
+  </table></div>
+  <p class="small">Data checks that learn nothing (missing values, duplicates, summaries) were run on the full table. Every number and plot that informed a <i>modelling</i> choice comes from the rules above, not from the test split.</p>
+</section>
+
+<!-- ======================================================== 4 -->
+<section id="methods">
+  <h2><span class="num">4</span>Baselines and models</h2>
+  <p class="lede">From trivial to flexible. More complex is not assumed to be better. Each model must beat the simpler one under the same protocol.</p>
+  <div class="cards">
+    <div class="card"><h4>Majority class <span class="tag">baseline</span></h4><p>Predicts "no purchase" for everyone (probability = training prevalence).</p><p class="why">The floor. It scores <span data-v="maj_acc"></span> accuracy while catching no buyers, which is why accuracy is not our metric.</p></div>
+    <div class="card"><h4>One-rule (depth-1 tree) <span class="tag">baseline</span></h4><p>The single best split on one feature.</p><p class="why">A meaningful baseline. In setting A it learns "PageValues &gt; 1.1", and in B "ExitRates &lt; 0.029". If a model can't beat one rule, it adds nothing.</p></div>
+    <div class="card"><h4>Logistic regression</h4><p>Linear log-odds, fitted by minimising L2-penalised log-loss. Tuned: penalty C, class weight (8 configs).</p><p class="why">Assumes effects are additive on the log-odds scale (after log1p). Interpretable, well-calibrated, a strong simple model.</p></div>
+    <div class="card"><h4>Decision tree</h4><p>Recursive splits minimising Gini impurity. Tuned: depth, min leaf size, class weight (24 configs).</p><p class="why">Captures thresholds and interactions with no scaling, but has high variance.</p></div>
+    <div class="card"><h4>Random forest</h4><p>300 trees on bootstrap samples (bagging) with random feature subsets, averaged. Tuned: depth, leaf, features, class weight (16 configs).</p><p class="why">Lowers a single tree's variance, and handles skew and interactions.</p></div>
+    <div class="card"><h4>Gradient boosting</h4><p>Histogram-based trees added one at a time to correct earlier errors (log-loss); early stopping on part of the training data. Tuned: learning rate, leaves, L2 (8 configs).</p><p class="why">Often strongest on tabular data, but needs more tuning and is easier to overfit.</p></div>
+  </div>
+  <p class="small">The grids are small on purpose: 15% validation (1,849 sessions, 286 buyers) is not enough to reliably separate dozens of configurations.</p>
+</section>
+
+<!-- ======================================================== 5 -->
+<section id="evaluation">
+  <h2><span class="num">5</span>Evaluation design</h2>
+  <p class="lede">Fixed before any model was compared, and kept the same for every model.</p>
+  <div class="splitbar">
+    <div style="flex:70;background:var(--blue-450)">Train 70% · <span data-v="n_train"></span></div>
+    <div style="flex:15;background:var(--series-3)">Val 15% · <span data-v="n_val"></span></div>
+    <div style="flex:15;background:var(--series-2)">Test 15% · <span data-v="n_test"></span></div>
+  </div>
+  <p class="small">Stratified on <code>Revenue</code>, seed 42. Every split has 15.5% buyers. The exact row assignment is in <code>results/splits.csv</code>.</p>
+  <h3>Protocol</h3>
+  <ol class="steps">
+    <li>Fit every configuration on <b>train</b> and score it on <b>validation</b> by PR-AUC. Keep the best per model family.</li>
+    <li>For each tuned model, pick the <b>decision threshold that maximises F1 on validation</b>.</li>
+    <li>In each setting, the model with the highest validation PR-AUC is <b>selected</b>. This rule was declared in advance.</li>
+    <li>Score every tuned model <b>once</b> on <b>test</b> at its validation threshold. Test data never influences a choice.</li>
+    <li>Quantify uncertainty: 1,000-sample bootstrap of the test set for 95% CIs, and a <i>paired</i> bootstrap for differences between models.</li>
+  </ol>
+  <h3>Metrics</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Metric</th><th>What it answers</th><th>Why we use it</th></tr>
+    <tr><td><b>PR-AUC</b> (average precision) <span class="tag blue">primary</span></td><td>How well are buyers ranked above non-buyers, summarised across all thresholds?</td><td>Focuses on the rare positive class. A random ranking scores the prevalence (<span data-v="prev"></span>), so the baseline is explicit.</td></tr>
+    <tr><td>Precision, recall, F1</td><td>At the chosen threshold: what share of flagged sessions are buyers, what share of buyers we catch, and their harmonic mean</td><td>What an actual decision would look like</td></tr>
+    <tr><td>ROC-AUC</td><td>Probability that a random buyer outranks a random non-buyer</td><td>Secondary. It looks flattering under imbalance</td></tr>
+    <tr><td>Confusion matrix</td><td>Counts of TP / FP / FN / TN</td><td>Makes the cost of each error type concrete (§7)</td></tr>
+    <tr><td>Accuracy</td><td>Share correct</td><td>Shown only for context. The majority baseline already reaches <span data-v="maj_acc"></span></td></tr>
+  </table></div>
+</section>
+
+<!-- ======================================================== 6 -->
+<section id="results">
+  <h2><span class="num">6</span>Results</h2>
+  <p class="lede">Test-set scores, each computed once, at thresholds chosen on validation. The <span class="tag blue">selected</span> model was chosen on validation, not test.</p>
+  <div class="controls">
+    <div><label>Feature setting</label><div class="seg" id="res-setting"><button data-s="B" class="on">B · No PageValues</button><button data-s="A">A · All features</button></div></div>
+  </div>
+  <div class="grid2">
+    <div>
+      <div class="chart-title">Test PR-AUC with 95% bootstrap CI</div>
+      <div class="small">Dashed line = majority baseline (prevalence = <span data-v="prev"></span>). Hover a bar for details.</div>
+      <div class="chart" id="chart-pr-bars"></div>
+    </div>
+    <div>
+      <div class="chart-title">Precision–recall curves (test)</div>
+      <div class="legend" id="legend-pr"></div>
+      <div class="chart" id="chart-pr-curves"></div>
+    </div>
+  </div>
+  <div class="tablewrap" id="tbl-results"></div>
+
+  <h3>What the evidence says</h3>
+  <ol>
+    <li><b>Every learned model beats both baselines in both settings.</b> In setting B the selected <span data-v="selB_label"></span> beats the one-rule baseline by <span data-v="cmp_B_stump"></span> PR-AUC (paired 95% CI excludes 0).</li>
+    <li><b>PageValues carries most of the signal in setting A.</b> A single split on it already reaches PR-AUC <span data-v="A_stump_pr"></span>. Permuting it on validation lowers the selected model's PR-AUC by <span data-v="pi_A_pv"></span>, against at most <span data-v="pi_A_2nd"></span> for any other feature. Removing it costs <span data-v="A_minus_B"></span> PR-AUC.</li>
+    <li><b>Without PageValues, the three stronger models are statistically close.</b> On paired bootstrap, <span data-v="selB_label"></span> − logistic regression = <span data-v="cmp_B_lr"></span>, and <span data-v="selB_label"></span> − random forest = <span data-v="cmp_B_forest"></span>. Both intervals include 0. The forest even scored slightly higher on test. We still report the validation-selected model, because switching after seeing test results would bias the estimate. 5-fold CV on train+val (§9) agrees that the gap is within noise.</li>
+    <li><b>Interpretation of B's model:</b> the most useful features are <code>Month</code> (November sessions buy most), <code>ProductRelated_Duration</code> and <code>ExitRates</code>. Logistic regression coefficients point the same way: more time on product pages raises the odds, and higher exit rates lower them. These are associations. For example, long product browsing may simply mark visitors who had already decided to buy.</li>
+  </ol>
+  <details><summary>Permutation importance (validation PR-AUC drop) for the selected models</summary>
+    <div class="grid2"><div><div class="chart-title">Setting B</div><div class="chart" id="chart-imp-B"></div></div>
+    <div><div class="chart-title">Setting A</div><div class="chart" id="chart-imp-A"></div></div></div></details>
+  <details><summary>Calibration of the selected setting-B model on test</summary>
+    <p class="small">Predicted probabilities track observed purchase rates closely in each bin, so the threshold explorer's probabilities can be read as rough purchase chances.</p>
+    <div class="tablewrap" id="tbl-cal"></div></details>
+</section>
+
+<!-- ======================================================== 7 -->
+<section id="explorer">
+  <h2><span class="num">7</span>Interactive: what does a threshold actually buy you?</h2>
+  <p class="lede">A model outputs a probability. A business has to pick a cut-off. Move the threshold and watch caught buyers (TP) trade against wasted follow-ups (FP). Everything is computed live from the saved test-set predictions.</p>
+  <div class="explorer">
+    <div class="controls">
+      <div><label>Feature setting</label><div class="seg" id="ex-setting"><button data-s="B" class="on">B · No PageValues</button><button data-s="A">A · All features</button></div></div>
+      <div><label for="ex-model">Model</label><select id="ex-model"></select></div>
+      <div><label for="ex-thr">Threshold: <span id="ex-thr-val" class="mono"></span></label><input type="range" id="ex-thr" min="0.01" max="0.95" step="0.01"></div>
+      <div><label>&nbsp;</label><button class="btn" id="ex-reset">Use validation-chosen threshold</button> <button class="btn" id="ex-half">0.50</button></div>
+    </div>
+    <div class="ex-grid">
+      <div>
+        <div class="cm" id="ex-cm"></div>
+        <div class="metrics" id="ex-metrics"></div>
+      </div>
+      <div>
+        <div class="grid2">
+          <div><div class="chart-title">Precision–recall curve · ● current threshold</div><div class="chart" id="ex-pr"></div></div>
+          <div><div class="chart-title">Metrics vs threshold</div>
+            <div class="legend"><span style="--c:var(--series-1)">Precision</span><span style="--c:var(--series-2)">Recall</span><span style="--c:var(--series-3)">F1</span></div>
+            <div class="chart" id="ex-curves"></div></div>
+        </div>
+        <div class="readout" id="ex-readout"></div>
+      </div>
+    </div>
+    <div class="costbox">
+      <b>Choosing by cost.</b> Suppose a missed buyer costs
+      <input type="number" id="ex-cost" min="1" max="50" step="1" value="5" style="width:64px"> times as much as a wasted follow-up.
+      The threshold that minimises total cost <b>on the validation set</b> is <span class="mono" id="ex-cost-thr"></span>.
+      <button class="btn" id="ex-cost-apply">Apply it to test</button>
+      <div class="small" id="ex-cost-note"></div>
+    </div>
+  </div>
+  <p class="small">Honesty note: sweeping the threshold on test is for understanding only. The numbers in §6 use thresholds fixed on validation, and the cost-based threshold above is also chosen on validation.</p>
+</section>
+
+<!-- ======================================================== 8 -->
+<section id="errors">
+  <h2><span class="num">8</span>Error analysis</h2>
+  <p class="lede">Selected setting-B model at its validation threshold (<span data-v="B_thr"></span>) on the <span data-v="n_test"></span> test sessions: <span data-v="B_tp"></span> TP, <span data-v="B_fp"></span> FP, <span data-v="B_fn"></span> FN, <span data-v="B_tn"></span> TN.</p>
+  <div class="grid2">
+    <div>
+      <h3>Who gets misclassified?</h3>
+      <div class="controls" style="margin-bottom:4px"><div><select id="seg-by"><option value="VisitorType">by visitor type</option><option value="Month">by month</option><option value="PageValues>0">by PageValues (not used by model B)</option><option value="Weekend">weekday / weekend</option></select></div></div>
+      <div class="tablewrap" id="tbl-seg"></div>
+    </div>
+    <div>
+      <h3>Typical profile of each outcome (medians)</h3>
+      <div class="tablewrap" id="tbl-outcome"></div>
+    </div>
+  </div>
+  <h3>Patterns</h3>
+  <ul>
+    <li><b>False positives look like buyers who didn't buy.</b> Their median session has about as many product pages and as much product time as true positives. Behaviour alone cannot tell a careful comparison-shopper from a buyer.</li>
+    <li><b>What the model is missing is exactly PageValues.</b> True positives have a median <code>PageValues</code> of <span data-v="tp_pv"></span>, false positives have 0. Among test sessions with <code>PageValues</code> = 0, only <span data-v="seg_pv0_prec"></span> of flagged sessions are buyers, against <span data-v="seg_pv1_prec"></span> when it is &gt; 0. This is the information gap between settings A and B.</li>
+    <li><b>False negatives are short sessions.</b> They have about half the product pages and time of true positives, and a few look implausible: 8 purchase sessions in the full data record at most one page view. A purchase normally needs several pages, so these rows probably reflect tracking or sessionisation quirks.</li>
+    <li><b>The model leans on context.</b> New visitors and November sessions get higher recall but also more false alarms, because the model has learned that both raise the base rate. This would hurt in a month or traffic mix that differs from the training data (see the temporal check in §9).</li>
+  </ul>
+  <h3>Inspect individual sessions</h3>
+  <p class="small">Linked to the threshold explorer above: change the setting, model or threshold there and this list updates. Rows are test sessions sorted by how confident (and wrong) the model is.</p>
+  <div class="controls"><div><label>Show</label><div class="seg" id="err-kind"><button data-k="FP" class="on">False positives</button><button data-k="FN">False negatives</button><button data-k="TP">True positives</button><button data-k="TN">True negatives</button></div></div>
+    <div class="small" id="err-ctx"></div></div>
+  <div class="tablewrap" id="tbl-err"></div>
+  <button class="btn" id="err-more">Show 10 more</button>
+</section>
+
+<!-- ======================================================== 9 -->
+<section id="robustness">
+  <h2><span class="num">9</span>Robustness checks</h2>
+  <p class="lede">Extra experiments that test whether the main conclusions depend on one lucky split or a hidden choice. All are in <code>results/extra_experiments.json</code>.</p>
+  <h3>a. 5-fold cross-validation on train + validation (test untouched)</h3>
+  <div class="tablewrap" id="tbl-cv"></div>
+  <p class="small">The ranking baselines ≪ logistic regression ≈ tree &lt; forest ≈ boosting is stable across folds. Fold-to-fold spread (SD ≈ 0.01–0.04) is about as large as the gaps between the top models. This is why we do not claim one of them is best.</p>
+  <h3>b. Temporal hold-out: train Feb–Sep, threshold on Oct, test Nov–Dec</h3>
+  <p>The random split mixes all months. Here the model must predict a <i>later</i> period whose purchase rate (<span data-v="tmp_test_rate"></span>) is almost double the training period's (<span data-v="tmp_train_rate"></span>).</p>
+  <div class="tablewrap" id="tbl-temporal"></div>
+  <p class="small">In setting B, logistic regression (<span data-v="tmp_B_lr"></span>) holds up at least as well as boosting (<span data-v="tmp_B_gb"></span>). The flexible models' small advantage on the random split does not survive a shift in time. Lift over the base rate also shrinks, so random-split scores are optimistic for deployment.</p>
+  <h3>c. Duplicates and d. analytics rates</h3>
+  <ul>
+    <li>Removing the 125 duplicate rows and re-splitting: setting-B test PR-AUC <span data-v="dedup_B"></span> (vs <span data-v="B_pr"></span>). The decision to keep them does not drive results.</li>
+    <li>Also dropping <code>BounceRates</code> and <code>ExitRates</code> (page-level analytics aggregates): best test PR-AUC <span data-v="abl_best"></span>. Performance barely moves: page counts and durations carry overlapping information, so the setting-B result does not hinge on those two columns.</li>
+  </ul>
+</section>
+
+<!-- ======================================================== 10 -->
+<section id="limitations">
+  <h2><span class="num">10</span>Limitations</h2>
+  <ul>
+    <li><b>Prediction time.</b> Features summarise the whole session, so this is an end-of-session model. A live, mid-session system would see less information and would likely score lower.</li>
+    <li><b>PageValues uncertainty.</b> We could not verify how Google Analytics computed it for this dataset. Setting A might be fair or might be leaky. We report both and base claims on B.</li>
+    <li><b>One store, one year, unknown site.</b> The data has no January or April, and the codes are anonymised. The temporal check shows performance changes when the period changes, so we make no claim for other retailers.</li>
+    <li><b>Small positive class.</b> The test set has 286 buyers, so PR-AUC CIs are about ±0.05 wide. Differences between strong models are within noise.</li>
+    <li><b>Single validation split for selection.</b> 15% validation chose boosting, but CV slightly prefers the forest. Model selection is itself noisy at this size.</li>
+    <li><b>Data quirks.</b> A few "purchase" sessions record at most one page view, which suggests tracking artefacts we cannot clean without raw logs.</li>
+    <li><b>No causal reading.</b> Importance scores show what the model uses, not what makes people buy.</li>
+  </ul>
+</section>
+
+<!-- ======================================================== 11 -->
+<section id="conclusion">
+  <h2><span class="num">11</span>Conclusion</h2>
+  <p>Browsing behaviour alone predicts purchase sessions <b>better than chance and better than a one-rule baseline, but modestly</b>. In our main setting, PR-AUC is <span data-v="B_pr"></span> against a prevalence of <span data-v="prev"></span>. At a validated threshold this means catching about <span data-v="B_rec_p"></span> of buyers while two in three flagged sessions do not buy. That is useful for cheap actions such as a reminder email, but not for costly ones.</p>
+  <p>The impressive-looking PR-AUC of <span data-v="A_pr"></span> with all features is driven by <code>PageValues</code>, a revenue-derived score, and should not be read as "behaviour predicts buying". Among models, logistic regression, random forest and gradient boosting perform within noise of each other. The simplest of them was the most stable under a shift in time. For this question and data, the main lessons concern <b>framing and leakage</b>, not model complexity.</p>
+  <p class="small">Possible next steps: time-stamped click data to build a genuine mid-session predictor; a cost-based threshold agreed with the business; data from more stores or years to test transfer.</p>
+</section>
+
+<!-- ======================================================== 12 -->
+<section id="reproduce">
+  <h2><span class="num">12</span>Reproduce</h2>
+  <p>Everything on this page is generated from the repository. One command recreates every number.</p>
+<pre><code>git clone <span class="repo-text">REPO_URL</span>
+cd intentcart
+python -m venv .venv &amp;&amp; source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python src/download_data.py      # fetches UCI zip, verifies SHA-256 (CSV is also committed)
+python src/run_all.py            # ~3 min: tuning, test scores, extra experiments, site data
+jupyter notebook notebooks/IntentCart_analysis.ipynb   # EDA + independent re-fit check</code></pre>
+  <div class="tablewrap"><table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td>Data source &amp; checksum</td><td><code>src/download_data.py</code>, SHA-256 <span class="mono">b3055ee3…8e0d9</span></td></tr>
+    <tr><td>Exact split</td><td><code>results/splits.csv</code> (row → train/val/test), stratified, seed 42, <code>intentcart.make_split</code></td></tr>
+    <tr><td>Preprocessing &amp; models</td><td><code>src/intentcart.py</code> (<code>make_preprocessor</code>, <code>model_grid</code>, <code>build_model</code>)</td></tr>
+    <tr><td>Every tuning run</td><td><code>results/tuning_log.csv</code> (<span data-v="n_configs"></span> configurations)</td></tr>
+    <tr><td>Selected configs &amp; validation scores</td><td><code>results/model_selection.csv</code></td></tr>
+    <tr><td>Test metrics + CIs, predictions</td><td><code>results/test_results.csv</code>, <code>results/test_predictions.csv</code></td></tr>
+    <tr><td>Extra experiments, error analysis</td><td><code>results/extra_experiments.json</code>, <code>results/error_analysis.json</code></td></tr>
+    <tr><td>Website data</td><td><code>docs/data/site.json</code> (written by <code>run_all.py</code>)</td></tr>
+  </table></div>
+  <p class="small">Library versions are pinned in <code>requirements.txt</code>. All randomness uses seed 42. The site is static HTML/CSS/JS in <code>docs/</code>, served by GitHub Pages. Data last generated: <span data-v="generated"></span>.</p>
+</section>
+
+<!-- ======================================================== 13 -->
+<section id="about">
+  <h2><span class="num">13</span>Team, AI use and citations</h2>
+  <h3>Contributions</h3>
+  <table>
+    <tr><th>Member</th><th>Contribution</th></tr>
+    <tr><td>Vishwak Mandaram (25110354)</td><td><b>50%.</b> Evaluation design (split, metrics, validation-only tuning and thresholds); baselines and model training and tuning; bootstrap confidence intervals and paired comparisons; error analysis and the error inspector; cross-validation and ablation checks; website sections 6–13, README and reproducibility.</td></tr>
+    <tr><td>Paila Rahul (25110222)</td><td><b>50%.</b> Problem framing and prediction-time definition; data-quality checks and EDA (duplicates, skew, seasonality); PageValues leakage analysis and the two feature settings; preprocessing pipeline; temporal hold-out and duplicate-sensitivity experiments; website sections 1–5 and the threshold explorer.</td></tr>
+  </table>
+  <p class="small">Both members discussed every major choice together, reviewed each other's code and text, and can explain the full project.</p>
+  <h3>AI-use disclosure</h3>
+  <p>We used Claude (Anthropic), an AI assistant, for brainstorming the evaluation design, drafting and debugging Python code, drafting website text, and building the HTML/CSS/JS of this site. We checked every reported number by re-running <code>src/run_all.py</code> and the independent re-fit check in the notebook. We reviewed the reasoning and take responsibility for all of it. No other external code was copied. Libraries used are listed below.</p>
+  <h3>Citations</h3>
+  <ul class="small">
+    <li>Sakar, C. O., Polat, S. O., Katircioglu, M., &amp; Kastro, Y. (2019). Real-time prediction of online shoppers' purchasing intention using multilayer perceptron and LSTM recurrent neural networks. <i>Neural Computing and Applications</i>, 31, 6893–6908.</li>
+    <li>Sakar, C. &amp; Kastro, Y. (2018). Online Shoppers Purchasing Intention Dataset. UCI Machine Learning Repository. https://doi.org/10.24432/C5F88Q (CC BY 4.0).</li>
+    <li>Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. <i>JMLR</i> 12, 2825–2830. Also pandas, NumPy, Matplotlib.</li>
+    <li>Saito, T. &amp; Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. <i>PLoS ONE</i> 10(3).</li>
+  </ul>
+</section>
+<footer>IntentCart · ES 335 Machine Learning · Built as a static site for GitHub Pages</footer>
+</main>
+</div>
+<div class="tooltip" id="tt"></div>
+<button class="totop" id="totop" aria-label="Back to top">↑</button>
+<script src="data/site.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/enhance.js"></script>
+</body>
+</html>

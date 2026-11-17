@@ -1,0 +1,587 @@
+{
+  "cv_trainval": {
+    "A": {
+      "majority": {
+        "mean": 0.1548,
+        "sd": 0.0003,
+        "folds": [
+          0.1546,
+          0.1546,
+          0.1546,
+          0.1551,
+          0.1551
+        ]
+      },
+      "stump": {
+        "mean": 0.4864,
+        "sd": 0.0213,
+        "folds": [
+          0.4588,
+          0.5055,
+          0.4695,
+          0.5057,
+          0.4926
+        ]
+      },
+      "logreg": {
+        "mean": 0.6931,
+        "sd": 0.0344,
+        "folds": [
+          0.6504,
+          0.737,
+          0.6696,
+          0.7141,
+          0.6943
+        ]
+      },
+      "tree": {
+        "mean": 0.7074,
+        "sd": 0.0343,
+        "folds": [
+          0.667,
+          0.7329,
+          0.6839,
+          0.7505,
+          0.7027
+        ]
+      },
+      "forest": {
+        "mean": 0.7489,
+        "sd": 0.0309,
+        "folds": [
+          0.7108,
+          0.7714,
+          0.7222,
+          0.7812,
+          0.7589
+        ]
+      },
+      "gboost": {
+        "mean": 0.7515,
+        "sd": 0.0375,
+        "folds": [
+          0.7089,
+          0.7826,
+          0.7196,
+          0.7942,
+          0.7525
+        ]
+      }
+    },
+    "B": {
+      "majority": {
+        "mean": 0.1548,
+        "sd": 0.0003,
+        "folds": [
+          0.1546,
+          0.1546,
+          0.1546,
+          0.1551,
+          0.1551
+        ]
+      },
+      "stump": {
+        "mean": 0.2167,
+        "sd": 0.004,
+        "folds": [
+          0.2137,
+          0.2191,
+          0.2114,
+          0.2182,
+          0.2209
+        ]
+      },
+      "logreg": {
+        "mean": 0.3381,
+        "sd": 0.0148,
+        "folds": [
+          0.3341,
+          0.3634,
+          0.3373,
+          0.3291,
+          0.3265
+        ]
+      },
+      "tree": {
+        "mean": 0.336,
+        "sd": 0.0104,
+        "folds": [
+          0.3362,
+          0.3384,
+          0.3434,
+          0.3184,
+          0.3437
+        ]
+      },
+      "forest": {
+        "mean": 0.3798,
+        "sd": 0.0123,
+        "folds": [
+          0.3693,
+          0.3932,
+          0.3813,
+          0.3651,
+          0.3898
+        ]
+      },
+      "gboost": {
+        "mean": 0.3661,
+        "sd": 0.0082,
+        "folds": [
+          0.3563,
+          0.3711,
+          0.3743,
+          0.3583,
+          0.3703
+        ]
+      }
+    }
+  },
+  "temporal": {
+    "train": {
+      "months": "Feb-Sep",
+      "n": 7056,
+      "rate": 0.1158
+    },
+    "val": {
+      "months": "Oct",
+      "n": 549,
+      "rate": 0.2095
+    },
+    "test": {
+      "months": "Nov-Dec",
+      "n": 4725,
+      "rate": 0.2066
+    },
+    "results": {
+      "A": {
+        "stump": {
+          "pr_auc": 0.4784,
+          "threshold": 0.5662,
+          "precision": 0.6284,
+          "recall": 0.6445,
+          "f1": 0.6363
+        },
+        "logreg": {
+          "pr_auc": 0.6323,
+          "threshold": 0.2839,
+          "precision": 0.6662,
+          "recall": 0.54,
+          "f1": 0.5965
+        },
+        "forest": {
+          "pr_auc": 0.6695,
+          "threshold": 0.3055,
+          "precision": 0.668,
+          "recall": 0.5297,
+          "f1": 0.5909
+        },
+        "gboost": {
+          "pr_auc": 0.6637,
+          "threshold": 0.2176,
+          "precision": 0.6428,
+          "recall": 0.5697,
+          "f1": 0.604
+        }
+      },
+      "B": {
+        "stump": {
+          "pr_auc": 0.2666,
+          "threshold": 0.1832,
+          "precision": 0.2774,
+          "recall": 0.8473,
+          "f1": 0.418
+        },
+        "logreg": {
+          "pr_auc": 0.3601,
+          "threshold": 0.0738,
+          "precision": 0.2613,
+          "recall": 0.9314,
+          "f1": 0.4081
+        },
+        "forest": {
+          "pr_auc": 0.3327,
+          "threshold": 0.1895,
+          "precision": 0.3338,
+          "recall": 0.4652,
+          "f1": 0.3887
+        },
+        "gboost": {
+          "pr_auc": 0.3312,
+          "threshold": 0.0613,
+          "precision": 0.2654,
+          "recall": 0.9293,
+          "f1": 0.4128
+        }
+      }
+    }
+  },
+  "dedup": {
+    "n_rows": 12205,
+    "results": {
+      "A": {
+        "logreg": 0.6642,
+        "gboost": 0.7449
+      },
+      "B": {
+        "logreg": 0.3321,
+        "gboost": 0.36
+      }
+    }
+  },
+  "ablation_no_rates": {
+    "logreg": {
+      "val_pr_auc": 0.3383,
+      "test_pr_auc": 0.3237
+    },
+    "forest": {
+      "val_pr_auc": 0.3516,
+      "test_pr_auc": 0.3705
+    },
+    "gboost": {
+      "val_pr_auc": 0.3668,
+      "test_pr_auc": 0.349
+    }
+  },
+  "permutation_importance_val": {
+    "A": [
+      {
+        "feature": "PageValues",
+        "mean": 0.5273,
+        "sd": 0.0108
+      },
+      {
+        "feature": "Month",
+        "mean": 0.0552,
+        "sd": 0.0073
+      },
+      {
+        "feature": "BounceRates",
+        "mean": 0.0235,
+        "sd": 0.0045
+      },
+      {
+        "feature": "ExitRates",
+        "mean": 0.0204,
+        "sd": 0.0058
+      },
+      {
+        "feature": "ProductRelated_Duration",
+        "mean": 0.0161,
+        "sd": 0.0037
+      },
+      {
+        "feature": "VisitorType",
+        "mean": 0.0158,
+        "sd": 0.0037
+      },
+      {
+        "feature": "Administrative",
+        "mean": 0.0127,
+        "sd": 0.0069
+      },
+      {
+        "feature": "ProductRelated",
+        "mean": 0.0081,
+        "sd": 0.004
+      },
+      {
+        "feature": "Administrative_Duration",
+        "mean": 0.0037,
+        "sd": 0.002
+      },
+      {
+        "feature": "TrafficType",
+        "mean": 0.0031,
+        "sd": 0.001
+      },
+      {
+        "feature": "Informational",
+        "mean": 0.0021,
+        "sd": 0.0006
+      },
+      {
+        "feature": "SpecialDay",
+        "mean": 0.0003,
+        "sd": 0.0003
+      },
+      {
+        "feature": "Weekend",
+        "mean": 0.0001,
+        "sd": 0.0006
+      },
+      {
+        "feature": "OperatingSystems",
+        "mean": 0.0001,
+        "sd": 0.0005
+      },
+      {
+        "feature": "Region",
+        "mean": -0.0006,
+        "sd": 0.001
+      },
+      {
+        "feature": "Browser",
+        "mean": -0.0011,
+        "sd": 0.0003
+      },
+      {
+        "feature": "Informational_Duration",
+        "mean": -0.0013,
+        "sd": 0.0003
+      }
+    ],
+    "B": [
+      {
+        "feature": "Month",
+        "mean": 0.0622,
+        "sd": 0.0152
+      },
+      {
+        "feature": "ProductRelated_Duration",
+        "mean": 0.054,
+        "sd": 0.012
+      },
+      {
+        "feature": "ExitRates",
+        "mean": 0.052,
+        "sd": 0.0149
+      },
+      {
+        "feature": "BounceRates",
+        "mean": 0.0246,
+        "sd": 0.0081
+      },
+      {
+        "feature": "ProductRelated",
+        "mean": 0.0229,
+        "sd": 0.0106
+      },
+      {
+        "feature": "VisitorType",
+        "mean": 0.0197,
+        "sd": 0.0055
+      },
+      {
+        "feature": "TrafficType",
+        "mean": 0.0139,
+        "sd": 0.0047
+      },
+      {
+        "feature": "Administrative",
+        "mean": 0.0123,
+        "sd": 0.0101
+      },
+      {
+        "feature": "Region",
+        "mean": 0.0084,
+        "sd": 0.0024
+      },
+      {
+        "feature": "OperatingSystems",
+        "mean": 0.0074,
+        "sd": 0.0065
+      },
+      {
+        "feature": "Weekend",
+        "mean": 0.0056,
+        "sd": 0.0009
+      },
+      {
+        "feature": "Informational_Duration",
+        "mean": 0.0042,
+        "sd": 0.003
+      },
+      {
+        "feature": "Administrative_Duration",
+        "mean": 0.0029,
+        "sd": 0.0034
+      },
+      {
+        "feature": "Browser",
+        "mean": 0.0024,
+        "sd": 0.0006
+      },
+      {
+        "feature": "Informational",
+        "mean": 0.0019,
+        "sd": 0.0024
+      },
+      {
+        "feature": "SpecialDay",
+        "mean": 0.0,
+        "sd": 0.0054
+      }
+    ]
+  },
+  "logreg_coefficients_B": [
+    {
+      "feature": "ExitRates",
+      "coef": -1.1006
+    },
+    {
+      "feature": "Month_Nov",
+      "coef": 0.5343
+    },
+    {
+      "feature": "ProductRelated_Duration",
+      "coef": 0.5084
+    },
+    {
+      "feature": "Month_Feb",
+      "coef": -0.409
+    },
+    {
+      "feature": "TrafficType_13",
+      "coef": -0.36
+    },
+    {
+      "feature": "TrafficType_3",
+      "coef": -0.3595
+    },
+    {
+      "feature": "Month_Mar",
+      "coef": -0.3459
+    },
+    {
+      "feature": "TrafficType_20",
+      "coef": 0.3375
+    },
+    {
+      "feature": "TrafficType_8",
+      "coef": 0.3055
+    },
+    {
+      "feature": "TrafficType_1",
+      "coef": -0.2855
+    },
+    {
+      "feature": "TrafficType_7",
+      "coef": 0.2592
+    },
+    {
+      "feature": "TrafficType_15",
+      "coef": -0.2432
+    },
+    {
+      "feature": "TrafficType_10",
+      "coef": 0.2236
+    },
+    {
+      "feature": "Browser_infrequent_sklearn",
+      "coef": 0.2204
+    },
+    {
+      "feature": "Browser_7",
+      "coef": -0.2117
+    }
+  ],
+  "calibration_test": {
+    "A": [
+      {
+        "bin": "0.0-0.1",
+        "n": 1289,
+        "mean_pred": 0.0259,
+        "observed": 0.0202
+      },
+      {
+        "bin": "0.1-0.2",
+        "n": 147,
+        "mean_pred": 0.1443,
+        "observed": 0.1973
+      },
+      {
+        "bin": "0.2-0.3",
+        "n": 79,
+        "mean_pred": 0.247,
+        "observed": 0.2658
+      },
+      {
+        "bin": "0.3-0.4",
+        "n": 39,
+        "mean_pred": 0.3495,
+        "observed": 0.3333
+      },
+      {
+        "bin": "0.4-0.5",
+        "n": 61,
+        "mean_pred": 0.4476,
+        "observed": 0.4262
+      },
+      {
+        "bin": "0.5-0.6",
+        "n": 43,
+        "mean_pred": 0.5579,
+        "observed": 0.4884
+      },
+      {
+        "bin": "0.6-0.7",
+        "n": 70,
+        "mean_pred": 0.6494,
+        "observed": 0.7286
+      },
+      {
+        "bin": "0.7-0.8",
+        "n": 44,
+        "mean_pred": 0.7443,
+        "observed": 0.6136
+      },
+      {
+        "bin": "0.8-0.9",
+        "n": 57,
+        "mean_pred": 0.8553,
+        "observed": 0.9123
+      },
+      {
+        "bin": "0.9-1.0",
+        "n": 21,
+        "mean_pred": 0.9294,
+        "observed": 0.9524
+      }
+    ],
+    "B": [
+      {
+        "bin": "0.0-0.1",
+        "n": 813,
+        "mean_pred": 0.0375,
+        "observed": 0.0394
+      },
+      {
+        "bin": "0.1-0.2",
+        "n": 479,
+        "mean_pred": 0.1499,
+        "observed": 0.1503
+      },
+      {
+        "bin": "0.2-0.3",
+        "n": 287,
+        "mean_pred": 0.2445,
+        "observed": 0.2544
+      },
+      {
+        "bin": "0.3-0.4",
+        "n": 130,
+        "mean_pred": 0.3405,
+        "observed": 0.3
+      },
+      {
+        "bin": "0.4-0.5",
+        "n": 82,
+        "mean_pred": 0.4476,
+        "observed": 0.4634
+      },
+      {
+        "bin": "0.5-0.6",
+        "n": 49,
+        "mean_pred": 0.5428,
+        "observed": 0.5714
+      },
+      {
+        "bin": "0.6-0.7",
+        "n": 10,
+        "mean_pred": 0.6286,
+        "observed": 0.4
+      }
+    ]
+  }
+}

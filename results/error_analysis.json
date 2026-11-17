@@ -1,0 +1,662 @@
+{
+  "A": {
+    "model": "gboost",
+    "threshold": 0.3612,
+    "counts": {
+      "TP": 201,
+      "FP": 108,
+      "FN": 85,
+      "TN": 1456
+    },
+    "segments": {
+      "VisitorType": [
+        {
+          "segment": "New_Visitor",
+          "n": 249,
+          "positives": 63,
+          "recall": 0.7778,
+          "fp_rate": 0.0376,
+          "precision": 0.875
+        },
+        {
+          "segment": "Other",
+          "n": 10,
+          "positives": 4,
+          "recall": 1.0,
+          "fp_rate": 0.0,
+          "precision": 1.0
+        },
+        {
+          "segment": "Returning_Visitor",
+          "n": 1591,
+          "positives": 219,
+          "recall": 0.6758,
+          "fp_rate": 0.0736,
+          "precision": 0.5944
+        }
+      ],
+      "Month": [
+        {
+          "segment": "Feb",
+          "n": 26,
+          "positives": 0,
+          "recall": null,
+          "fp_rate": 0.0,
+          "precision": 0.0
+        },
+        {
+          "segment": "Mar",
+          "n": 275,
+          "positives": 30,
+          "recall": 0.9,
+          "fp_rate": 0.0571,
+          "precision": 0.6585
+        },
+        {
+          "segment": "May",
+          "n": 509,
+          "positives": 58,
+          "recall": 0.8276,
+          "fp_rate": 0.0488,
+          "precision": 0.6857
+        },
+        {
+          "segment": "June",
+          "n": 49,
+          "positives": 3,
+          "recall": 0.6667,
+          "fp_rate": 0.087,
+          "precision": 0.3333
+        },
+        {
+          "segment": "Jul",
+          "n": 68,
+          "positives": 12,
+          "recall": 0.25,
+          "fp_rate": 0.0893,
+          "precision": 0.375
+        },
+        {
+          "segment": "Aug",
+          "n": 60,
+          "positives": 6,
+          "recall": 0.8333,
+          "fp_rate": 0.0556,
+          "precision": 0.625
+        },
+        {
+          "segment": "Sep",
+          "n": 61,
+          "positives": 9,
+          "recall": 0.7778,
+          "fp_rate": 0.1154,
+          "precision": 0.5385
+        },
+        {
+          "segment": "Oct",
+          "n": 83,
+          "positives": 13,
+          "recall": 0.6923,
+          "fp_rate": 0.0571,
+          "precision": 0.6923
+        },
+        {
+          "segment": "Nov",
+          "n": 466,
+          "positives": 120,
+          "recall": 0.6167,
+          "fp_rate": 0.1069,
+          "precision": 0.6667
+        },
+        {
+          "segment": "Dec",
+          "n": 253,
+          "positives": 35,
+          "recall": 0.7429,
+          "fp_rate": 0.0596,
+          "precision": 0.6667
+        }
+      ],
+      "PageValues>0": [
+        {
+          "segment": "PageValues = 0",
+          "n": 1434,
+          "positives": 55,
+          "recall": 0.0,
+          "fp_rate": 0.0007,
+          "precision": 0.0
+        },
+        {
+          "segment": "PageValues > 0",
+          "n": 416,
+          "positives": 231,
+          "recall": 0.8701,
+          "fp_rate": 0.5784,
+          "precision": 0.6526
+        }
+      ],
+      "Weekend": [
+        {
+          "segment": "Weekday",
+          "n": 1420,
+          "positives": 220,
+          "recall": 0.6818,
+          "fp_rate": 0.07,
+          "precision": 0.641
+        },
+        {
+          "segment": "Weekend",
+          "n": 430,
+          "positives": 66,
+          "recall": 0.7727,
+          "fp_rate": 0.0659,
+          "precision": 0.68
+        }
+      ]
+    },
+    "median_by_outcome": {
+      "TP": {
+        "Administrative": 2.0,
+        "Administrative_Duration": 47.0,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 29.0,
+        "ProductRelated_Duration": 991.422,
+        "BounceRates": 0.0,
+        "ExitRates": 0.014,
+        "PageValues": 26.12,
+        "SpecialDay": 0.0
+      },
+      "FN": {
+        "Administrative": 3.0,
+        "Administrative_Duration": 63.75,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 37.0,
+        "ProductRelated_Duration": 1262.652,
+        "BounceRates": 0.005,
+        "ExitRates": 0.022,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      "FP": {
+        "Administrative": 4.0,
+        "Administrative_Duration": 89.825,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 36.0,
+        "ProductRelated_Duration": 1450.452,
+        "BounceRates": 0.003,
+        "ExitRates": 0.018,
+        "PageValues": 18.323,
+        "SpecialDay": 0.0
+      },
+      "TN": {
+        "Administrative": 0.0,
+        "Administrative_Duration": 0.0,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 15.0,
+        "ProductRelated_Duration": 441.583,
+        "BounceRates": 0.005,
+        "ExitRates": 0.031,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      }
+    },
+    "confident_fp": [
+      {
+        "row_id": 6054,
+        "p": 0.9174,
+        "Month": "Jul",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 1.0,
+        "Administrative": 0.0,
+        "Informational": 0.0,
+        "ProductRelated": 6.0,
+        "ProductRelated_Duration": 222.4,
+        "BounceRates": 0.0,
+        "ExitRates": 0.033,
+        "PageValues": 63.553,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 6429,
+        "p": 0.8974,
+        "Month": "June",
+        "VisitorType": "New_Visitor",
+        "Weekend": 1.0,
+        "Administrative": 2.0,
+        "Informational": 0.0,
+        "ProductRelated": 15.0,
+        "ProductRelated_Duration": 443.567,
+        "BounceRates": 0.0,
+        "ExitRates": 0.006,
+        "PageValues": 166.374,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 8419,
+        "p": 0.8324,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 0.0,
+        "Informational": 0.0,
+        "ProductRelated": 32.0,
+        "ProductRelated_Duration": 1658.125,
+        "BounceRates": 0.0,
+        "ExitRates": 0.015,
+        "PageValues": 19.606,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 7257,
+        "p": 0.8115,
+        "Month": "June",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 2.0,
+        "Informational": 0.0,
+        "ProductRelated": 36.0,
+        "ProductRelated_Duration": 474.307,
+        "BounceRates": 0.0,
+        "ExitRates": 0.016,
+        "PageValues": 47.659,
+        "SpecialDay": 0.0
+      }
+    ],
+    "confident_fn": [
+      {
+        "row_id": 10789,
+        "p": 0.0185,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 1.0,
+        "Informational": 0.0,
+        "ProductRelated": 1.0,
+        "ProductRelated_Duration": 0.0,
+        "BounceRates": 0.2,
+        "ExitRates": 0.2,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 7322,
+        "p": 0.0332,
+        "Month": "Jul",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 1.0,
+        "Informational": 0.0,
+        "ProductRelated": 17.0,
+        "ProductRelated_Duration": 876.429,
+        "BounceRates": 0.0,
+        "ExitRates": 0.004,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 6767,
+        "p": 0.0339,
+        "Month": "Oct",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 3.0,
+        "Informational": 0.0,
+        "ProductRelated": 18.0,
+        "ProductRelated_Duration": 721.8,
+        "BounceRates": 0.01,
+        "ExitRates": 0.02,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 6433,
+        "p": 0.0369,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 1.0,
+        "Informational": 0.0,
+        "ProductRelated": 11.0,
+        "ProductRelated_Duration": 113.8,
+        "BounceRates": 0.083,
+        "ExitRates": 0.117,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      }
+    ]
+  },
+  "B": {
+    "model": "gboost",
+    "threshold": 0.1938,
+    "counts": {
+      "TP": 186,
+      "FP": 398,
+      "FN": 100,
+      "TN": 1166
+    },
+    "segments": {
+      "VisitorType": [
+        {
+          "segment": "New_Visitor",
+          "n": 249,
+          "positives": 63,
+          "recall": 0.8095,
+          "fp_rate": 0.4624,
+          "precision": 0.3723
+        },
+        {
+          "segment": "Other",
+          "n": 10,
+          "positives": 4,
+          "recall": 0.75,
+          "fp_rate": 0.5,
+          "precision": 0.5
+        },
+        {
+          "segment": "Returning_Visitor",
+          "n": 1591,
+          "positives": 219,
+          "recall": 0.6027,
+          "fp_rate": 0.2252,
+          "precision": 0.2993
+        }
+      ],
+      "Month": [
+        {
+          "segment": "Feb",
+          "n": 26,
+          "positives": 0,
+          "recall": null,
+          "fp_rate": 0.0385,
+          "precision": 0.0
+        },
+        {
+          "segment": "Mar",
+          "n": 275,
+          "positives": 30,
+          "recall": 0.5667,
+          "fp_rate": 0.1878,
+          "precision": 0.2698
+        },
+        {
+          "segment": "May",
+          "n": 509,
+          "positives": 58,
+          "recall": 0.5,
+          "fp_rate": 0.1619,
+          "precision": 0.2843
+        },
+        {
+          "segment": "June",
+          "n": 49,
+          "positives": 3,
+          "recall": 0.3333,
+          "fp_rate": 0.1739,
+          "precision": 0.1111
+        },
+        {
+          "segment": "Jul",
+          "n": 68,
+          "positives": 12,
+          "recall": 0.3333,
+          "fp_rate": 0.2143,
+          "precision": 0.25
+        },
+        {
+          "segment": "Aug",
+          "n": 60,
+          "positives": 6,
+          "recall": 0.6667,
+          "fp_rate": 0.2037,
+          "precision": 0.2667
+        },
+        {
+          "segment": "Sep",
+          "n": 61,
+          "positives": 9,
+          "recall": 0.6667,
+          "fp_rate": 0.3654,
+          "precision": 0.24
+        },
+        {
+          "segment": "Oct",
+          "n": 83,
+          "positives": 13,
+          "recall": 0.6154,
+          "fp_rate": 0.3,
+          "precision": 0.2759
+        },
+        {
+          "segment": "Nov",
+          "n": 466,
+          "positives": 120,
+          "recall": 0.8083,
+          "fp_rate": 0.448,
+          "precision": 0.3849
+        },
+        {
+          "segment": "Dec",
+          "n": 253,
+          "positives": 35,
+          "recall": 0.5714,
+          "fp_rate": 0.2385,
+          "precision": 0.2778
+        }
+      ],
+      "PageValues>0": [
+        {
+          "segment": "PageValues = 0",
+          "n": 1434,
+          "positives": 55,
+          "recall": 0.6364,
+          "fp_rate": 0.2263,
+          "precision": 0.1009
+        },
+        {
+          "segment": "PageValues > 0",
+          "n": 416,
+          "positives": 231,
+          "recall": 0.6537,
+          "fp_rate": 0.4649,
+          "precision": 0.6371
+        }
+      ],
+      "Weekend": [
+        {
+          "segment": "Weekday",
+          "n": 1420,
+          "positives": 220,
+          "recall": 0.6364,
+          "fp_rate": 0.2342,
+          "precision": 0.3325
+        },
+        {
+          "segment": "Weekend",
+          "n": 430,
+          "positives": 66,
+          "recall": 0.697,
+          "fp_rate": 0.3214,
+          "precision": 0.2822
+        }
+      ]
+    },
+    "median_by_outcome": {
+      "TP": {
+        "Administrative": 3.0,
+        "Administrative_Duration": 54.625,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 37.0,
+        "ProductRelated_Duration": 1263.258,
+        "BounceRates": 0.0,
+        "ExitRates": 0.013,
+        "PageValues": 16.789,
+        "SpecialDay": 0.0
+      },
+      "FN": {
+        "Administrative": 2.0,
+        "Administrative_Duration": 46.5,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 21.0,
+        "ProductRelated_Duration": 682.324,
+        "BounceRates": 0.005,
+        "ExitRates": 0.023,
+        "PageValues": 13.794,
+        "SpecialDay": 0.0
+      },
+      "FP": {
+        "Administrative": 3.0,
+        "Administrative_Duration": 75.708,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 29.0,
+        "ProductRelated_Duration": 1178.154,
+        "BounceRates": 0.0,
+        "ExitRates": 0.015,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      "TN": {
+        "Administrative": 0.0,
+        "Administrative_Duration": 0.0,
+        "Informational": 0.0,
+        "Informational_Duration": 0.0,
+        "ProductRelated": 11.5,
+        "ProductRelated_Duration": 320.625,
+        "BounceRates": 0.008,
+        "ExitRates": 0.039,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      }
+    },
+    "confident_fp": [
+      {
+        "row_id": 12148,
+        "p": 0.6618,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 11.0,
+        "Informational": 0.0,
+        "ProductRelated": 92.0,
+        "ProductRelated_Duration": 4637.538,
+        "BounceRates": 0.001,
+        "ExitRates": 0.011,
+        "PageValues": 17.284,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 7923,
+        "p": 0.647,
+        "Month": "Aug",
+        "VisitorType": "New_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 0.0,
+        "Informational": 0.0,
+        "ProductRelated": 47.0,
+        "ProductRelated_Duration": 636.7,
+        "BounceRates": 0.0,
+        "ExitRates": 0.0,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 9576,
+        "p": 0.626,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 7.0,
+        "Informational": 4.0,
+        "ProductRelated": 337.0,
+        "ProductRelated_Duration": 11835.104,
+        "BounceRates": 0.005,
+        "ExitRates": 0.016,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 10301,
+        "p": 0.6214,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 3.0,
+        "Informational": 5.0,
+        "ProductRelated": 272.0,
+        "ProductRelated_Duration": 7434.743,
+        "BounceRates": 0.009,
+        "ExitRates": 0.022,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      }
+    ],
+    "confident_fn": [
+      {
+        "row_id": 10789,
+        "p": 0.0237,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 1.0,
+        "Informational": 0.0,
+        "ProductRelated": 1.0,
+        "ProductRelated_Duration": 0.0,
+        "BounceRates": 0.2,
+        "ExitRates": 0.2,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 11798,
+        "p": 0.024,
+        "Month": "Nov",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 0.0,
+        "Informational": 0.0,
+        "ProductRelated": 6.0,
+        "ProductRelated_Duration": 81.75,
+        "BounceRates": 0.0,
+        "ExitRates": 0.067,
+        "PageValues": 0.0,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 9100,
+        "p": 0.0267,
+        "Month": "Dec",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 0.0,
+        "Informational": 0.0,
+        "ProductRelated": 3.0,
+        "ProductRelated_Duration": 139.0,
+        "BounceRates": 0.0,
+        "ExitRates": 0.067,
+        "PageValues": 127.308,
+        "SpecialDay": 0.0
+      },
+      {
+        "row_id": 6449,
+        "p": 0.0282,
+        "Month": "Oct",
+        "VisitorType": "Returning_Visitor",
+        "Weekend": 0.0,
+        "Administrative": 0.0,
+        "Informational": 0.0,
+        "ProductRelated": 4.0,
+        "ProductRelated_Duration": 236.8,
+        "BounceRates": 0.0,
+        "ExitRates": 0.05,
+        "PageValues": 36.261,
+        "SpecialDay": 0.0
+      }
+    ]
+  }
+}

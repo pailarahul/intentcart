@@ -1,0 +1,195 @@
+{
+  "quality": {
+    "n_rows": 12330,
+    "n_features": 17,
+    "n_positive": 1908,
+    "positive_rate": 0.15474452554744525,
+    "missing_values": 0,
+    "duplicate_rows_extra_copies": 125,
+    "rows_in_duplicate_groups": 201,
+    "duplicate_rows_all_nonpurchase": true,
+    "duplicate_rows_all_single_page_bounce": true,
+    "negative_values": {},
+    "months_present": [
+      "Feb",
+      "Mar",
+      "May",
+      "June",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "months_missing": [
+      "Jan",
+      "Apr"
+    ]
+  },
+  "month": [
+    {
+      "month": "Feb",
+      "n": 184,
+      "rate": 0.0163
+    },
+    {
+      "month": "Mar",
+      "n": 1907,
+      "rate": 0.1007
+    },
+    {
+      "month": "May",
+      "n": 3364,
+      "rate": 0.1085
+    },
+    {
+      "month": "June",
+      "n": 288,
+      "rate": 0.1007
+    },
+    {
+      "month": "Jul",
+      "n": 432,
+      "rate": 0.1528
+    },
+    {
+      "month": "Aug",
+      "n": 433,
+      "rate": 0.1755
+    },
+    {
+      "month": "Sep",
+      "n": 448,
+      "rate": 0.192
+    },
+    {
+      "month": "Oct",
+      "n": 549,
+      "rate": 0.2095
+    },
+    {
+      "month": "Nov",
+      "n": 2998,
+      "rate": 0.2535
+    },
+    {
+      "month": "Dec",
+      "n": 1727,
+      "rate": 0.1251
+    }
+  ],
+  "visitor": [
+    {
+      "type": "New_Visitor",
+      "n": 1694,
+      "rate": 0.2491
+    },
+    {
+      "type": "Other",
+      "n": 85,
+      "rate": 0.1882
+    },
+    {
+      "type": "Returning_Visitor",
+      "n": 10551,
+      "rate": 0.1393
+    }
+  ],
+  "weekend": [
+    {
+      "weekend": 0,
+      "n": 9462,
+      "rate": 0.1489
+    },
+    {
+      "weekend": 1,
+      "n": 2868,
+      "rate": 0.174
+    }
+  ],
+  "pagevalues": {
+    "share_zero": 0.7786,
+    "rate_if_zero": 0.0385,
+    "rate_if_positive": 0.5634,
+    "n_zero": 9600,
+    "n_positive": 2730,
+    "purchases_with_zero_pv": 370
+  },
+  "median_by_class": [
+    {
+      "feature": "Administrative",
+      "no_purchase": 0.0,
+      "purchase": 2.0
+    },
+    {
+      "feature": "Administrative_Duration",
+      "no_purchase": 0.0,
+      "purchase": 52.367
+    },
+    {
+      "feature": "Informational",
+      "no_purchase": 0.0,
+      "purchase": 0.0
+    },
+    {
+      "feature": "Informational_Duration",
+      "no_purchase": 0.0,
+      "purchase": 0.0
+    },
+    {
+      "feature": "ProductRelated",
+      "no_purchase": 16.0,
+      "purchase": 29.0
+    },
+    {
+      "feature": "ProductRelated_Duration",
+      "no_purchase": 510.19,
+      "purchase": 1109.906
+    },
+    {
+      "feature": "BounceRates",
+      "no_purchase": 0.004,
+      "purchase": 0.0
+    },
+    {
+      "feature": "ExitRates",
+      "no_purchase": 0.029,
+      "purchase": 0.016
+    },
+    {
+      "feature": "PageValues",
+      "no_purchase": 0.0,
+      "purchase": 16.758
+    },
+    {
+      "feature": "SpecialDay",
+      "no_purchase": 0.0,
+      "purchase": 0.0
+    }
+  ],
+  "skew": {
+    "Administrative": 1.96,
+    "Administrative_Duration": 5.62,
+    "Informational": 4.04,
+    "Informational_Duration": 7.58,
+    "ProductRelated": 4.34,
+    "ProductRelated_Duration": 7.26,
+    "BounceRates": 2.95,
+    "ExitRates": 2.15,
+    "PageValues": 6.38,
+    "SpecialDay": 3.3
+  },
+  "max": {
+    "Administrative": 27.0,
+    "Administrative_Duration": 3398.75,
+    "Informational": 24.0,
+    "Informational_Duration": 2549.38,
+    "ProductRelated": 705.0,
+    "ProductRelated_Duration": 63973.52,
+    "BounceRates": 0.2,
+    "ExitRates": 0.2,
+    "PageValues": 361.76,
+    "SpecialDay": 1.0
+  }
+}
